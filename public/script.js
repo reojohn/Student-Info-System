@@ -68,19 +68,32 @@ document.getElementById("studentForm").addEventListener("submit", async (e) => {
     university: document.getElementById("university").value.trim(),
   };
 
-  //  Validate inputs
-  if (!student.student_id || !student.name || !student.gender || !student.email) {
-    alert("Please fill in all required fields!");
-    return;
-  }
-  if (!/^[A-Za-z\s]+$/.test(student.name)) {
-    alert("Name should contain only letters!");
-    return;
-  }
-  if (!["male", "female"].includes(student.gender.toLowerCase())) {
-    alert("Gender must be Male or Female!");
-    return;
-  }
+// ✅ Validate inputs
+if (!student.student_id || !student.name || !student.gender || !student.email) {
+  alert("Please fill in all required fields!");
+  return;
+}
+
+if (!/^[A-Za-z\s]+$/.test(student.name)) {
+  alert("Name should only contain letters!");
+  return;
+}
+
+if (!/^[A-Za-z\s]+$/.test(student.gender)) {
+  alert("Gender should only contain letters!");
+  return;
+}
+
+if (!["male", "female"].includes(student.gender.toLowerCase())) {
+  alert("Gender must be either Male or Female!");
+  return;
+}
+
+if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(student.email)) {
+  alert("Please enter a valid Gmail address (e.g., example@gmail.com).");
+  return;
+}
+
 
   // Send POST request to add student
   const response = await fetch("/students", {
